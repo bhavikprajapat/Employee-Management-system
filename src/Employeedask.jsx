@@ -3,12 +3,13 @@ import Empform1 from './Empform1'
 import Filterdata from './Filterdata'
 import { DataTable } from 'primereact/datatable'
 import Datatable from './Datatable'
+import Navset1 from './Navset1'
 
 const Employeedask = () => {
   return (
     <div>
-    <Empform1/>
-    
+      <Navset1/>
+      <Empform1/>
     </div>
   )
 }

@@ -62,17 +62,17 @@ const Empform1 = () => {
 
             <div>
                 <div className='bg_set_1 d-flex justify-content-center'>
-                    <div className='card shadow-md mx-1 m-5 mt-3 p-5 col-7'>
+                    <div className='card shadow-sm border-0 p-4 m-4 rounded-4 col-7'>
                         <h2 style={{ fontSize: "18px", color: "rgba(11, 11, 125, 1)" }} className='py-1'>Add New Employee</h2>
-                        <div>
+                        <div className='row gap-1'>
 
                             <form onSubmit={formik.handleSubmit}>
-                                <div className='d-flex gap-2 align-items-end'>
-                                    <div>
-                                        <label htmlFor="Name" style={{ fontWeight: "800" }}>Name</label>
+                                <div className='d-flex align-items-end gap-2'>
+                                    <div className='col-3'>
+                                        <label htmlFor="Name" className='form-lable fw-bold'>Name</label>
                                         <input type="text"
                                             placeholder='Enter Your Name'
-                                            className='input_pad'
+                                            className='form-control filter-input'
                                             id='Name'
                                             name='Name'
                                             onChange={formik.handleChange}
@@ -85,9 +85,9 @@ const Empform1 = () => {
                                             ) : null
                                         }
                                     </div>
-                                    <div>
-                                        <label htmlFor="Department" style={{ fontWeight: "800" }}>Department</label>
-                                        <select name="Department" id="Department" onChange={formik.handleChange} value={formik.values.Department} className='input_pad'>
+                                    <div className='col-3'>
+                                        <label htmlFor="Department" className='form-lable fw-bold'>Department</label>
+                                        <select name="Department" id="Department" onChange={formik.handleChange} value={formik.values.Department} className='form-control filter-input'>
                                             <option value="">Department</option>
                                             <option value="HR">HR</option>
                                             <option value="IT">IT</option>
@@ -102,18 +102,18 @@ const Empform1 = () => {
                                         {/* <label htmlFor="" style={{ fontWeight: "800" }}>Department</label>
                                    <input type="text" /> */}
                                     </div>
-                                    <div>
-                                        <label htmlFor="Salary" style={{ fontWeight: "800" }}>Salary</label>
-                                        <input type="text" className='input_pad' name='Salary' id='Salary' onChange={formik.handleChange} value={formik.values.Salary} />
+                                    <div className='col-3'>
+                                        <label htmlFor="Salary" className='form-lable fw-bold'>Salary</label>
+                                        <input type="text" className='form-control filter-input' name='Salary' id='Salary' onChange={formik.handleChange} value={formik.values.Salary} />
                                         {
                                             formik.touched.Salary && formik.errors.Salary ? (
                                                 <div style={{ color: "black" }} >{formik.errors.Salary}</div>
                                             ) : null
                                         }
                                     </div>
-                                    <div className=''>
-                                        <label htmlFor="Status" style={{ fontWeight: "800" }}>Status</label>
-                                        <select name="Status" id="Status" className='input_pad' onChange={formik.handleChange} value={formik.values.Status}>
+                                    <div className='col-2'>
+                                        <label htmlFor="Status" className='form-lable fw-bold'>Status</label>
+                                        <select name="Status" id="Status" className='form-control filter-input' onChange={formik.handleChange} value={formik.values.Status}>
                                             <option value="">Status</option>
                                             <option value="Active">Active</option>
                                             <option value="In Active">In Active</option>
@@ -137,7 +137,7 @@ const Empform1 = () => {
                     </div>
 
 
-                    <div className='card shadow-md m-5 mt-3 d-flex justify-content-center p-2 col-4'>
+                    <div className='card shadow-sm border-0 p-2 m-4 rounded-4 col-4'>
                         <h2 style={{ fontSize: "18px", color: "rgba(39, 6, 101, 1)" }} className='py-2'>Quick Filters</h2>
                         <div className='d-flex justify-content-between '>
                             <div className='box-size  justify-content-center ' style={{ background: "#64abe2ff" }}>
@@ -173,8 +173,8 @@ const Empform1 = () => {
                     </div>
                 </div>
                 <Filterdata filterdata={filterdata} setfilterdata={setfilter} data={data} setdata={{ setdata }} />
-             <Datatable data={data} setdata={setdata} filterdata={filterdata} setfilterdata={setfilter} />
-
+                <Datatable data={data} setdata={setdata} filterdata={filterdata} setfilterdata={setfilter} />
+                                        
 
             </div>
         )

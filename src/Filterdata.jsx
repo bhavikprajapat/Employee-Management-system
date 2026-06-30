@@ -4,55 +4,80 @@ import { Formik } from 'formik'
 
 const Filterdata = ({data,setdata}) => {
 
-function Filterdata(item,index){
-    const results = data.filter((item,index)=>{
-        console.log(item)
+function Filterdatas(item,index){
+    const results = data.filter((it,index)=>{
+       return it === item
     })
+    console.log(results,item,it)
+    setdata(results)
 }
 return (
-    <div className=''>
-        <div className='card d-flex mx-3'>
-           
-            <div className='d-flex px-5 align-items-center justify-content-between'>
-                 <div className='m-4'>
-                <input type="text" className='inp_pad' placeholder='Search By Name' />
-            </div>
-                <div>
-                    <label htmlFor="Department" style={{ fontWeight: "800" }}>Department</label>
-                    <select className='inp_pad' onClick={()=>Filterdata()}>
-                        <option value="">Department</option>
-                        <option value="HR">HR</option>
-                        <option value="IT">IT</option>
-                        <option value="Finance">Finance</option>
-                        <option value="Other">Other</option>
-                        
-                    </select>
-                    
+    <div className="px-4 mt-2">
+  <div className="card shadow-sm border-0 p-4 rounded-4">
 
-                    {/* <label htmlFor="" style={{ fontWeight: "800" }}>Department</label>
-                                            <input type="text" /> */}
-                </div>
-                <div>
-                    <label htmlFor="Salary" style={{ fontWeight: "800" }}>Salary</label>
-                    <input type="text"  className='inp_pad' name='Salary' id='Salary' />
-                </div>
-                <div className=''>
-                    <label htmlFor="Status" style={{ fontWeight: "800" }}>Status</label>
-                    <select name="Status" id="Status" className='inp_pad' >
-                        <option value="">Status</option>
-                        <option value="Active">Active</option>
-                        <option value="In Active">In Active</option>
-                    </select>
-                </div>
-                <div >
-                    <button className='btn btn-success font-size' type='submit' style={{ fontSize: "16px" }} >Reset </button>
-                </div>
+    <div className="row g-3 align-items-end">
 
-            </div>
+     
+      <div className="col-lg-3 col-md-6">
+        <label className="form-label fw-bold">Search Employee</label>
+        <input
+          type="text"
+          className="form-control filter-input"
+          placeholder="Search by Name"
+        />
+      </div>
 
+      <div className="col-lg-2 col-md-6">
+        <label className="form-label fw-bold">Department</label>
+        <select
+          className="form-select filter-input"
+         
+        >
+          <option value="">All Department</option>
+          <option value="HR">HR</option>
+          <option value="IT">IT</option>
+          <option value="Finance">Finance</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
 
-        </div>
+    
+      <div className="col-lg-2 col-md-6">
+        <label className="form-label fw-bold">Salary</label>
+        <input
+          type="number"
+          className="form-control filter-input"
+          placeholder="₹ Salary"
+        />
+      </div>
+
+      
+      <div className="col-lg-2 col-md-6">
+        <label className="form-label fw-bold">Status</label>
+        <select className="form-select filter-input">
+          <option value="">All Status</option>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+      </div>
+
+    
+      <div className="col-lg-3 col-md-12 d-flex gap-2">
+
+        <button className="btn btn-primary w-100"  onChange={(e) => Filterdatas()}>
+          Search
+        </button>
+
+        <button className="btn btn-outline-secondary w-100">
+          Reset
+        </button>
+
+      </div>
+
     </div>
+
+  </div>
+</div>
 )
 }
 export default Filterdata;
