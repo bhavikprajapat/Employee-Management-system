@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Formik } from 'formik';
 
-const Datatable = ({data,setdata}) => {
+const Datatable = ({data,setdata,setfilter}) => {
 
-const deletedata = (id) =>{
-    const result = data.filter((item,index)=>{
-        return index !==id
+const [id,setid] = useState()
+
+const deletedata = (item,index) =>{
+    const result = data.filter((it,ind)=>{
+        return ind !== index
     })
-    setdata([result])
-    console.log(result)
+    setdata(result)
+    setfilter(result)
+    
 }
 
+const Editdata = (_,index) =>{
+  setid(index)
+
+  console.log(index)
+}
 
 return (
 <div className="card shadow-lg m-5 p-3">
@@ -50,7 +59,7 @@ return (
             </td>
 
             <td>
-              <button className="btn btn-warning btn-sm me-2">
+              <button className="btn btn-warning btn-sm me-2" onClick={()=>Editdata(item,index)}>
                 Edit
               </button>
 
