@@ -10,12 +10,16 @@ import { RiMoneyRupeeCircleLine } from 'react-icons/ri'
 import * as Yup from 'yup';
 import Datatable from './Datatable'
 import Filterdata from './Filterdata'
+import Navset1 from './Navset1'
+import { FiEdit3 } from 'react-icons/fi'
 
 
 const Empform1 = () => {
 
     const [data, setdata] = useState([])
     const [filterdata, setfilter] = useState([])
+    const [edit,seteditindex] = useState(null)
+   
 
     useEffect(() => {
         let savedata = JSON.parse(localStorage.getItem("employee")) || []
@@ -46,19 +50,65 @@ const Empform1 = () => {
                 .required('Salary is required'),
 
             Status: Yup.string()
-                .required('Field Select is Required'),
+                .required('Field Select is Required'),      
         }),
         onSubmit: (values, { resetForm }) => {
+            if(edit == null){
             const updatedata = [...data, values]
             setdata(updatedata)
-
             setfilter(updatedata)
-
+            }
+            else{
+                const updatedata = [...data]
+                updatedata[edit] = values;
+                setdata(updatedata);
+                setfilter(updatedata)
+                seteditindex(null)
+            }
             console.log(data)
             resetForm();
         }
 
     })
+
+    function datashow(){
+
+        setfilter(data)
+    }
+
+    function activedata(){
+        const result = filterdata.filter((item,index)=>{
+             return item.Status === "Active"
+
+        })
+        console.log(result)
+            setfilter(result)
+    }
+
+
+// useEffect(() => {
+//   if (edit !== null && data[edit]) {
+//     formik.setValues({
+//       Name: data[edit].Name,
+//       Department: data[edit].Department,
+//       Salary: data[edit].Salary,
+//       Status: data[edit].Status,
+//     });
+//   }
+  
+// }, [edit, data]);
+
+useEffect(()=>{
+    if(edit !== null && data[edit]){
+        formik.setValues({
+            Name: data[edit].Name,
+            Department:data[edit].Department,
+            Salary:data[edit].Salary,
+            Status:data[edit].Status,
+        })
+    }
+},[edit,data])
+
     return (
 
         <div>
@@ -82,7 +132,7 @@ const Empform1 = () => {
                                     />
                                     {
                                         formik.touched.Name && formik.errors.Name ? (
-                                            <div style={{ color: "black" }} >{formik.errors.Name}</div>
+                                            <div style={{ color: "red" }} >{formik.errors.Name}</div>
                                         ) : null
                                     }
                                 </div>
@@ -97,7 +147,7 @@ const Empform1 = () => {
                                     </select>
                                     {
                                         formik.touched.Department && formik.errors.Department ? (
-                                            <div style={{ color: "black" }} >{formik.errors.Department}</div>
+                                            <div style={{ color: "red" }} >{formik.errors.Department}</div>
                                         ) : null
                                     }
                                     {/* <label htmlFor="" style={{ fontWeight: "800" }}>Department</label>
@@ -105,10 +155,10 @@ const Empform1 = () => {
                                 </div>
                                 <div className='col-3'>
                                     <label htmlFor="Salary" className='form-lable fw-bold'>Salary</label>
-                                    <input type="text" className='form-control filter-input' name='Salary' id='Salary' onChange={formik.handleChange} value={formik.values.Salary} />
+                                    <input type="text" className='form-control filter-input ' name='Salary' id='Salary' onChange={formik.handleChange} value={formik.values.Salary} />
                                     {
                                         formik.touched.Salary && formik.errors.Salary ? (
-                                            <div style={{ color: "black" }} >{formik.errors.Salary}</div>
+                                            <div style={{ color: "red" }} >{formik.errors.Salary}</div>
                                         ) : null
                                     }
                                 </div>
@@ -121,12 +171,12 @@ const Empform1 = () => {
                                     </select>
                                     {
                                         formik.touched.Status && formik.errors.Status ? (
-                                            <div style={{ color: "black" }} >{formik.errors.Status}</div>
+                                            <div style={{ color: "red" }} >{formik.errors.Status}</div>
                                         ) : null
                                     }
                                 </div>
                                 <div >
-                                    <button className='btn btn-success font-size' type='submit' style={{ fontSize: "16px" }} ><IoMdAdd /> </button>
+                                    <button className='btn btn-success font-size' type='submit' style={{ fontSize: "16px" }} > {edit === null?<IoMdAdd /> : <FiEdit3 />} </button>
                                 </div>
 
                             </div>
@@ -143,7 +193,7 @@ const Empform1 = () => {
                     <div className='d-flex justify-content-between '>
                         <div className='box-size  justify-content-center ' style={{ background: "#64abe2ff" }}>
                             <div style={{ fontSize: "40px", textAlign: "center" }}><HiOutlineUserGroup /></div>
-                            <div>
+                            <div onClick={datashow}>
                                 <h5 className='text-center'>All Data</h5>
                             </div>
 
@@ -164,7 +214,7 @@ const Empform1 = () => {
 
                         </div>
                         <div className='box-size justify-content-center' style={{ background: "#57b97eff" }}>
-                            <div style={{ fontSize: "40px", textAlign: "center" }}>< GrMenu /> </div>
+                            <div style={{ fontSize: "40px", textAlign: "center" }} onClick={activedata}>< GrMenu /> </div>
                             <div><h5 className='text-center'>All Active</h5> </div>
 
                         </div>
@@ -173,9 +223,12 @@ const Empform1 = () => {
 
                 </div>
             </div>
+            
             <Filterdata data={data} filterdata={filterdata} setfilter={ setfilter } />
-            <Datatable data={filterdata} setdata={setdata} setfilter={setfilter}
+            <Datatable data={filterdata} setdata={setdata} setfilter={setfilter} seteditindex={seteditindex}
+            
 />
+           
 
 
         </div>

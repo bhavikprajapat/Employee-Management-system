@@ -3,9 +3,9 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Formik } from 'formik';
 
-const Datatable = ({data,setdata,setfilter}) => {
+const Datatable = ({data,setdata,setfilter,seteditindex}) => {
 
-const [id,setid] = useState()
+
 
 const deletedata = (item,index) =>{
     const result = data.filter((it,ind)=>{
@@ -17,7 +17,7 @@ const deletedata = (item,index) =>{
 }
 
 const Editdata = (_,index) =>{
-  setid(index)
+  seteditindex(index)
 
   console.log(index)
 }

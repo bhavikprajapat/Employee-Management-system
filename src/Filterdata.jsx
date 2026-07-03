@@ -25,9 +25,22 @@ function Filterdatas() {
 
   const search = formikfilter.values.filtername.toLowerCase();
 
-  const result = data.filter((item) =>
-    item.Name.toLowerCase().includes(search)
-  );
+  const result = data.filter((item) => {
+   
+    const Namematch = formikfilter.values.filtername === "" || item.Name.toLowerCase().includes(search)
+
+    const Departmentmatch = formikfilter.values.filterdep === ""  || item.Department === formikfilter.values.filterdep
+
+    const Salarymatch = formikfilter.values.filtersalary === "" || Number(item.Salary) === Number(formikfilter.values.filtersalary)
+
+    const Statusmatch = formikfilter.values.filterstatus === "" || item.Status === formikfilter.values.filterstatus
+
+    return(
+      Namematch && Departmentmatch && Salarymatch && Statusmatch 
+    )
+}
+ 
+);
 
  
 
@@ -35,23 +48,24 @@ function Filterdatas() {
   setfilter(result);
 }
 
+
 function ResetFilter(){
   formikfilter.resetForm();
   setfilter(data)
 
 }
 
-function Filterdatasdep(){
-  let search = formikfilter.values.filterdep
+// function Filterdatasdep(){
+//   let search = formikfilter.values.filterdep
 
-  console.log(search)
+//   console.log(search)
 
-  let result  = data.filter((item)=>{
-    console.log(item.Department)
-      return item.Department === search
-  })
-   setfilter(result)
-}
+//   let result  = data.filter((item)=>{
+//     console.log(item.Department)
+//       return item.Department === search
+//   })
+//    setfilter(result)
+// }
   
 
  
@@ -97,29 +111,38 @@ function Filterdatasdep(){
             </div>
 
 
-            {/* <div className="col-lg-2 col-md-6">
-              <label className="form-label fw-bold">Salary</label>
+            <div className="col-lg-2 col-md-6">
+              <label className="form-label fw-bold" htmlFor='filtersalary'>Salary</label>
               <input
+                id='filtersalary'
+                name='filtersalary'
                 type="number"
+                onChange={formikfilter.handleChange}
+                value={formikfilter.values.filtersalary}
                 className="form-control filter-input"
                 placeholder="₹ Salary"
               />
-            </div> */}
+            </div>
 
 
-            {/* <div className="col-lg-2 col-md-6">
-              <label className="form-label fw-bold">Status</label>
-              <select className="form-select filter-input">
+            <div className="col-lg-2 col-md-6">
+              <label className="form-label fw-bold" htmlFor='filterstatus'>Status</label>
+              <select className="form-select filter-input"
+              name='filterstatus'
+              id='filterstatus' 
+              onChange={formikfilter.handleChange}
+              value={formikfilter.values.filterstatus}
+              >
                 <option value="">All Status</option>
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
               </select>
-            </div> */}
+            </div>
 
 
             <div className="col-lg-3 col-md-12 d-flex gap-2">
 
-              <button className="btn btn-sm btn-primary w-100 " type='submit'  onClick={Filterdatas}>
+              <button className="btn btn-sm btn-primary w-100 " type='button'  onClick={Filterdatas}>
                 Search
               </button>
 
